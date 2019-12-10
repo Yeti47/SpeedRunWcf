@@ -1,0 +1,628 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<diagram program="umlet" version="14.2">
+  <zoom_level>10</zoom_level>
+  <element>
+    <type>CustomElementImpl</type>
+    <coordinates>
+      <x>90</x>
+      <y>20</y>
+      <w>481</w>
+      <h>141</h>
+    </coordinates>
+    <panel_attributes>Game
+PK Id int NOT NULL
+Name nvarchar NOT NULL
+ReleaseDate DateTime NULL
+Publisher nvarchar NOT NULL</panel_attributes>
+    <additional_attributes/>
+    <custom_code>//Modify the code below to define the element's behavior.
+//
+//Example:  Change the line
+//  y += printCenter(textline,y);
+//to
+//  y += 2*printCenter(textline,y);
+//and observe the element preview.
+
+
+int y=textHeight();
+
+drawRectangle(0,0,width,height);
+
+ArrayList&lt;String&gt; keys = new ArrayList&lt;String&gt;();
+ArrayList&lt;String&gt; names = new ArrayList&lt;String&gt;();
+ArrayList&lt;String&gt; dataTypes = new ArrayList&lt;String&gt;();
+
+int ctr = -1;
+
+for(String textline : textlines) {
+
+	if(ctr &lt; 0) {
+
+		print(textline, 12, 20);
+			
+	}
+	else {
+	
+		String[] words = textline.trim().split(" ");
+			
+		String key = "";
+		String name = "";
+		String dataType = "";
+		
+		if(words.length &gt; 0) {
+			
+			if(words[0].equals("PK") || words[0].equals("FK") || words[0].equals("UNIQUE") || words[0].equals("PK/FK"))
+				key = words[0];
+			else
+				name = words[0];
+			
+			if(words.length &gt; 1) {
+				
+				if(key.equals("")) {
+					name = words[0];
+					dataType = words[1];
+				}
+				else
+					name = words[1];
+				
+				if(words.length &gt; 2) {
+	
+					if(words.length == 2)
+						dataType = words[2];
+					else {
+	
+						for(int i = 2; i &lt; words.length; i++)
+							dataType += " " + words[i];
+	
+						dataType = dataType.trim();
+						
+					}
+					
+				}
+				
+			}
+			
+		}
+	
+		keys.add(key);
+		names.add(name);
+		dataTypes.add(dataType);
+			
+	}
+
+
+	ctr++;
+
+}
+
+y+= 10;
+
+drawLineHorizontal(y);
+
+boolean hasKey = false;
+
+for(String k : keys) {
+
+	if(!k.equals("")) {
+
+		hasKey = true;
+		break;
+		
+	}
+	
+}
+
+boolean hasName = false;
+
+for(String n : names) {
+
+	if(!n.equals("")) {
+
+		hasName = true;
+		break;
+		
+	}
+	
+}
+
+boolean hasDataType = false;
+
+for(String dt : dataTypes) {
+
+	if(!dt.equals("")) {
+
+		hasDataType = true;
+		break;
+		
+	}
+	
+}
+
+int firstRectWidth = 0;
+
+if(hasKey || hasName) {
+
+	firstRectWidth = Math.min(width / 3, 80);
+
+	drawRectangle(0, y, firstRectWidth, height - y + 1);
+
+	if(hasDataType) {
+		//drawRectangle(firstRectWidth, y, width / 3 + (width / 3 + firstRectWidth), height - y);
+		drawRectangle((int)Math.ceil(width / 3f * 2), y, (int)Math.ceil(width / 3f), height - y + 1);
+	}
+	
+}
+
+y += 18;
+
+for(int i = 0; i &lt; ctr; i++) {
+
+	String printKey = keys.get(i);
+	if(!printKey.equals(""))
+		printKey = "*" + printKey + "*";
+
+
+	print(printKey, 10, y);
+
+	String printName = names.get(i);
+
+	print(printName, firstRectWidth + 8, y);
+
+	String printType = dataTypes.get(i);
+
+	if(!printType.equals("")) {
+
+		String[] printTypeWords = printType.trim().split(" ");
+		printType = "_" + printTypeWords[0] + "_";
+
+		print(printType, (width /3) * 2 + 8, y);
+
+		if(printTypeWords.length &gt; 1) {
+
+			String additionalTypeInfo = "/";
+
+			for(int j = 1; j &lt; printTypeWords.length; j++)
+				additionalTypeInfo += printTypeWords[j] + " ";
+
+			additionalTypeInfo = additionalTypeInfo.trim() + "/";
+
+			print(additionalTypeInfo, (width /3) * 2 + 12 + textWidth(printType), y);
+						
+		}
+
+	}
+
+	
+	
+	y += 20;
+	
+
+}
+</custom_code>
+  </element>
+  <element>
+    <type>CustomElementImpl</type>
+    <coordinates>
+      <x>80</x>
+      <y>490</y>
+      <w>661</w>
+      <h>141</h>
+    </coordinates>
+    <panel_attributes>Player
+PK Id int NOT NULL
+GamerTag nvarchar NOT NULL UNIQUE
+</panel_attributes>
+    <additional_attributes/>
+    <custom_code>//Modify the code below to define the element's behavior.
+//
+//Example:  Change the line
+//  y += printCenter(textline,y);
+//to
+//  y += 2*printCenter(textline,y);
+//and observe the element preview.
+
+
+int y=textHeight();
+
+drawRectangle(0,0,width,height);
+
+ArrayList&lt;String&gt; keys = new ArrayList&lt;String&gt;();
+ArrayList&lt;String&gt; names = new ArrayList&lt;String&gt;();
+ArrayList&lt;String&gt; dataTypes = new ArrayList&lt;String&gt;();
+
+int ctr = -1;
+
+for(String textline : textlines) {
+
+	if(ctr &lt; 0) {
+
+		print(textline, 12, 20);
+			
+	}
+	else {
+	
+		String[] words = textline.trim().split(" ");
+			
+		String key = "";
+		String name = "";
+		String dataType = "";
+		
+		if(words.length &gt; 0) {
+			
+			if(words[0].equals("PK") || words[0].equals("FK") || words[0].equals("UNIQUE") || words[0].equals("PK/FK"))
+				key = words[0];
+			else
+				name = words[0];
+			
+			if(words.length &gt; 1) {
+				
+				if(key.equals("")) {
+					name = words[0];
+					dataType = words[1];
+				}
+				else
+					name = words[1];
+				
+				if(words.length &gt; 2) {
+	
+					if(words.length == 2)
+						dataType = words[2];
+					else {
+	
+						for(int i = 2; i &lt; words.length; i++)
+							dataType += " " + words[i];
+	
+						dataType = dataType.trim();
+						
+					}
+					
+				}
+				
+			}
+			
+		}
+	
+		keys.add(key);
+		names.add(name);
+		dataTypes.add(dataType);
+			
+	}
+
+
+	ctr++;
+
+}
+
+y+= 10;
+
+drawLineHorizontal(y);
+
+boolean hasKey = false;
+
+for(String k : keys) {
+
+	if(!k.equals("")) {
+
+		hasKey = true;
+		break;
+		
+	}
+	
+}
+
+boolean hasName = false;
+
+for(String n : names) {
+
+	if(!n.equals("")) {
+
+		hasName = true;
+		break;
+		
+	}
+	
+}
+
+boolean hasDataType = false;
+
+for(String dt : dataTypes) {
+
+	if(!dt.equals("")) {
+
+		hasDataType = true;
+		break;
+		
+	}
+	
+}
+
+int firstRectWidth = 0;
+
+if(hasKey || hasName) {
+
+	firstRectWidth = Math.min(width / 3, 80);
+
+	drawRectangle(0, y, firstRectWidth, height - y + 1);
+
+	if(hasDataType) {
+		//drawRectangle(firstRectWidth, y, width / 3 + (width / 3 + firstRectWidth), height - y);
+		drawRectangle((int)Math.ceil(width / 3f * 2), y, (int)Math.ceil(width / 3f), height - y + 1);
+	}
+	
+}
+
+y += 18;
+
+for(int i = 0; i &lt; ctr; i++) {
+
+	String printKey = keys.get(i);
+	if(!printKey.equals(""))
+		printKey = "*" + printKey + "*";
+
+
+	print(printKey, 10, y);
+
+	String printName = names.get(i);
+
+	print(printName, firstRectWidth + 8, y);
+
+	String printType = dataTypes.get(i);
+
+	if(!printType.equals("")) {
+
+		String[] printTypeWords = printType.trim().split(" ");
+		printType = "_" + printTypeWords[0] + "_";
+
+		print(printType, (width /3) * 2 + 8, y);
+
+		if(printTypeWords.length &gt; 1) {
+
+			String additionalTypeInfo = "/";
+
+			for(int j = 1; j &lt; printTypeWords.length; j++)
+				additionalTypeInfo += printTypeWords[j] + " ";
+
+			additionalTypeInfo = additionalTypeInfo.trim() + "/";
+
+			print(additionalTypeInfo, (width /3) * 2 + 12 + textWidth(printType), y);
+						
+		}
+
+	}
+
+	
+	
+	y += 20;
+	
+
+}
+</custom_code>
+  </element>
+  <element>
+    <type>CustomElementImpl</type>
+    <coordinates>
+      <x>180</x>
+      <y>250</y>
+      <w>471</w>
+      <h>141</h>
+    </coordinates>
+    <panel_attributes>SpeedRun
+PK Id int
+FK PlayerId int NOT NULL 
+FK GameId int NOT NULL
+Time bigint NOT NULL
+RecordDate DateTime NOT NULL</panel_attributes>
+    <additional_attributes/>
+    <custom_code>//Modify the code below to define the element's behavior.
+//
+//Example:  Change the line
+//  y += printCenter(textline,y);
+//to
+//  y += 2*printCenter(textline,y);
+//and observe the element preview.
+
+
+int y=textHeight();
+
+drawRectangle(0,0,width,height);
+
+ArrayList&lt;String&gt; keys = new ArrayList&lt;String&gt;();
+ArrayList&lt;String&gt; names = new ArrayList&lt;String&gt;();
+ArrayList&lt;String&gt; dataTypes = new ArrayList&lt;String&gt;();
+
+int ctr = -1;
+
+for(String textline : textlines) {
+
+	if(ctr &lt; 0) {
+
+		print(textline, 12, 20);
+			
+	}
+	else {
+	
+		String[] words = textline.trim().split(" ");
+			
+		String key = "";
+		String name = "";
+		String dataType = "";
+		
+		if(words.length &gt; 0) {
+			
+			if(words[0].equals("PK") || words[0].equals("FK") || words[0].equals("UNIQUE") || words[0].equals("PK/FK"))
+				key = words[0];
+			else
+				name = words[0];
+			
+			if(words.length &gt; 1) {
+				
+				if(key.equals("")) {
+					name = words[0];
+					dataType = words[1];
+				}
+				else
+					name = words[1];
+				
+				if(words.length &gt; 2) {
+	
+					if(words.length == 2)
+						dataType = words[2];
+					else {
+	
+						for(int i = 2; i &lt; words.length; i++)
+							dataType += " " + words[i];
+	
+						dataType = dataType.trim();
+						
+					}
+					
+				}
+				
+			}
+			
+		}
+	
+		keys.add(key);
+		names.add(name);
+		dataTypes.add(dataType);
+			
+	}
+
+
+	ctr++;
+
+}
+
+y+= 10;
+
+drawLineHorizontal(y);
+
+boolean hasKey = false;
+
+for(String k : keys) {
+
+	if(!k.equals("")) {
+
+		hasKey = true;
+		break;
+		
+	}
+	
+}
+
+boolean hasName = false;
+
+for(String n : names) {
+
+	if(!n.equals("")) {
+
+		hasName = true;
+		break;
+		
+	}
+	
+}
+
+boolean hasDataType = false;
+
+for(String dt : dataTypes) {
+
+	if(!dt.equals("")) {
+
+		hasDataType = true;
+		break;
+		
+	}
+	
+}
+
+int firstRectWidth = 0;
+
+if(hasKey || hasName) {
+
+	firstRectWidth = Math.min(width / 3, 80);
+
+	drawRectangle(0, y, firstRectWidth, height - y + 1);
+
+	if(hasDataType) {
+		//drawRectangle(firstRectWidth, y, width / 3 + (width / 3 + firstRectWidth), height - y);
+		drawRectangle((int)Math.ceil(width / 3f * 2), y, (int)Math.ceil(width / 3f), height - y + 1);
+	}
+	
+}
+
+y += 18;
+
+for(int i = 0; i &lt; ctr; i++) {
+
+	String printKey = keys.get(i);
+	if(!printKey.equals(""))
+		printKey = "*" + printKey + "*";
+
+
+	print(printKey, 10, y);
+
+	String printName = names.get(i);
+
+	print(printName, firstRectWidth + 8, y);
+
+	String printType = dataTypes.get(i);
+
+	if(!printType.equals("")) {
+
+		String[] printTypeWords = printType.trim().split(" ");
+		printType = "_" + printTypeWords[0] + "_";
+
+		print(printType, (width /3) * 2 + 8, y);
+
+		if(printTypeWords.length &gt; 1) {
+
+			String additionalTypeInfo = "/";
+
+			for(int j = 1; j &lt; printTypeWords.length; j++)
+				additionalTypeInfo += printTypeWords[j] + " ";
+
+			additionalTypeInfo = additionalTypeInfo.trim() + "/";
+
+			print(additionalTypeInfo, (width /3) * 2 + 12 + textWidth(printType), y);
+						
+		}
+
+	}
+
+	
+	
+	y += 20;
+	
+
+}
+</custom_code>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>410</x>
+      <y>150</y>
+      <w>30</w>
+      <h>120</h>
+    </coordinates>
+    <panel_attributes>lt=-
+m1= 1
+m2= n</panel_attributes>
+    <additional_attributes>10.0;10.0;10.0;100.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>400</x>
+      <y>380</y>
+      <w>30</w>
+      <h>130</h>
+    </coordinates>
+    <panel_attributes>lt=-
+m1= n
+m2= 1
+</panel_attributes>
+    <additional_attributes>10.0;10.0;10.0;110.0</additional_attributes>
+  </element>
+</diagram>
